@@ -119,12 +119,22 @@ const GOAL_PLANS = {
         { icon: '🥤', name: 'Green Tea / Black Coffee', desc: 'Mild thermogenic effect; appetite suppression. Avoid sugar.', badge: 'Thermogenic' },
       ],
       veg: [
-        { icon: '🌱', name: 'Tofu & Tempeh', desc: 'High protein, low calorie vegan staples. Great for fat loss.', badge: 'Vegan Protein' },
-        { icon: '🥛', name: 'Plant-Based Protein / Whey', desc: 'Essential to hit protein targets without excess carbs/fat.', badge: 'Supplement' },
+        { icon: '🥚', name: 'Eggs & Egg Whites', desc: 'High protein, keeps you full. 3–4 whole eggs + 3 whites at breakfast.', badge: 'Protein' },
+        { icon: '🥗', name: 'Greek Yogurt & Cottage Cheese', desc: 'Slow-digesting casein protein — great for evening meals.', badge: 'Casein' },
+        { icon: '🥛', name: 'Whey / Casein Protein', desc: 'Essential to hit protein targets without excess carbs/fat.', badge: 'Supplement' },
+        { icon: '🌱', name: 'Tofu & Tempeh', desc: 'High protein, low calorie vegan staples. Great for fat loss.', badge: 'Plant Protein' },
         { icon: '🫘', name: 'Lentils & Beans', desc: 'High protein and fibre to keep you full and satisfied.', badge: 'High Fibre' },
         { icon: '🥦', name: 'Broccoli, Spinach, Kale', desc: 'Low-calorie, high-fibre veggies. Fill half your plate with these.', badge: 'Low Cal' },
         { icon: '🍠', name: 'Sweet Potato & Oats', desc: 'Complex carbs for sustained energy. Eat around workouts.', badge: 'Complex Carb' },
-        { icon: '🥗', name: 'Greek Yogurt / Vegan Yogurt', desc: 'High protein snack. Look for unsweetened options.', badge: 'Snack' },
+        { icon: '🫐', name: 'Berries & Apples', desc: 'Low-sugar fruits high in fibre. Helps manage cravings.', badge: 'Low Sugar' },
+      ],
+      vegan: [
+        { icon: '🌱', name: 'Tofu & Tempeh', desc: 'High protein, low calorie vegan staples. Great for fat loss.', badge: 'Vegan Protein' },
+        { icon: '🥛', name: 'Plant-Based Protein Powder', desc: 'Pea or soy isolate. Essential to hit protein targets.', badge: 'Supplement' },
+        { icon: '🫘', name: 'Lentils & Beans', desc: 'High protein and fibre to keep you full and satisfied.', badge: 'High Fibre' },
+        { icon: '🥦', name: 'Broccoli, Spinach, Kale', desc: 'Low-calorie, high-fibre veggies. Fill half your plate with these.', badge: 'Low Cal' },
+        { icon: '🍠', name: 'Sweet Potato & Oats', desc: 'Complex carbs for sustained energy. Eat around workouts.', badge: 'Complex Carb' },
+        { icon: '🥗', name: 'Soy / Almond Yogurt', desc: 'High protein snack. Look for unsweetened options.', badge: 'Snack' },
         { icon: '🫐', name: 'Berries & Apples', desc: 'Low-sugar fruits high in fibre. Helps manage cravings.', badge: 'Low Sugar' },
         { icon: '🥤', name: 'Green Tea / Black Coffee', desc: 'Mild thermogenic effect; appetite suppression. Avoid sugar.', badge: 'Thermogenic' },
       ]
@@ -158,12 +168,22 @@ const GOAL_PLANS = {
         { icon: '🧃', name: 'Mass Gainer Shake', desc: 'Oats + banana + milk + peanut butter + whey = 700+ kcal.', badge: 'Calorie Boost' },
       ],
       veg: [
+        { icon: '🥛', name: 'Whole Milk & Greek Yogurt', desc: 'Protein + calories combo. Great for mass gain and recovery.', badge: 'Dairy' },
+        { icon: '🥚', name: 'Whole Eggs', desc: '6g protein + healthy fats + micronutrients. Eat the yolk.', badge: 'Complete Food' },
+        { icon: '🌱', name: 'Tofu, Tempeh & Seitan', desc: 'Primary protein sources. Eat in large quantities to hit targets.', badge: 'Plant Protein' },
+        { icon: '🫘', name: 'Chickpeas & Lentils', desc: 'Great source of both carbs and protein for muscle building.', badge: 'Complex Food' },
+        { icon: '🍚', name: 'White Rice & Pasta', desc: 'Fast-digesting carbs — ideal pre/post workout to fuel and replenish glycogen.', badge: 'Fast Carb' },
+        { icon: '🥔', name: 'Potatoes & Sweet Potatoes', desc: 'Calorie-dense whole food carbs. Easy to hit calorie surplus.', badge: 'Complex Carb' },
+        { icon: '🥜', name: 'Peanut Butter & Nuts', desc: 'Calorie-dense healthy fats. Easy to add 200+ kcal to meals.', badge: 'Healthy Fat' },
+        { icon: '🧃', name: 'Mass Gainer Shake', desc: 'Oats + banana + milk + peanut butter + whey = 700+ kcal.', badge: 'Calorie Boost' },
+      ],
+      vegan: [
         { icon: '🌱', name: 'Tofu, Tempeh & Seitan', desc: 'Primary protein sources. Eat in large quantities to hit targets.', badge: 'Vegan Protein' },
         { icon: '🫘', name: 'Chickpeas & Lentils', desc: 'Great source of both carbs and protein for muscle building.', badge: 'Complex Food' },
         { icon: '🍚', name: 'White Rice & Pasta', desc: 'Fast-digesting carbs — ideal pre/post workout to fuel and replenish glycogen.', badge: 'Fast Carb' },
         { icon: '🥔', name: 'Potatoes & Sweet Potatoes', desc: 'Calorie-dense whole food carbs. Easy to hit calorie surplus.', badge: 'Complex Carb' },
         { icon: '🥜', name: 'Peanut Butter & Nuts', desc: 'Calorie-dense healthy fats. Easy to add 200+ kcal to meals.', badge: 'Healthy Fat' },
-        { icon: '🥛', name: 'Soy Milk / Whole Milk', desc: 'Soy milk has similar protein to cow\'s milk. Great for shakes.', badge: 'Dairy/Alt' },
+        { icon: '🥛', name: 'Soy Milk / Oat Milk', desc: 'Soy milk has similar protein to cow\'s milk. Great for shakes.', badge: 'Dairy Alt' },
         { icon: '🍌', name: 'Bananas & Dates', desc: 'High-carb fruits great as pre-workout fuel or to hit calorie targets.', badge: 'Pre-Workout' },
         { icon: '🧃', name: 'Mass Gainer Shake', desc: 'Oats + banana + soy milk + peanut butter + vegan protein = 700+ kcal.', badge: 'Calorie Boost' },
       ]
@@ -197,12 +217,22 @@ const GOAL_PLANS = {
         { icon: '🫘', name: 'Legumes & Lentils', desc: 'Cheap, calorie-rich, protein-rich. Add to every meal as a side.', badge: 'Budget Friendly' },
       ],
       veg: [
+        { icon: '🥛', name: 'Full-Fat Dairy', desc: 'Whole milk, cheese, cream — calorie-dense and high in protein.', badge: 'Dairy' },
+        { icon: '🍚', name: 'Rice, Pasta & Bread', desc: 'Easy-to-eat calorie-dense carbs. Make every meal carb-heavy.', badge: 'Calorie Dense' },
+        { icon: '🥜', name: 'Nut Butters & Avocado', desc: '9 kcal/g of fat. Add to every meal — easiest way to spike calories.', badge: 'Fat Dense' },
+        { icon: '🍳', name: 'Olive Oil / Butter', desc: 'Cook everything in oil or butter to add 120 kcal per tablespoon.', badge: 'Calorie Boost' },
+        { icon: '🌱', name: 'Seitan & Tempeh', desc: 'Very protein dense. Fry or bake with sauces for extra calories.', badge: 'High Cal' },
+        { icon: '🥤', name: 'Calorie-Dense Smoothies', desc: 'Blend oats + milk + banana + peanut butter + honey = 700+ kcal.', badge: 'Liquid Calories' },
+        { icon: '🍫', name: 'Dark Chocolate 70%+', desc: 'Healthy fats + calories + antioxidants. 30–40g daily is fine.', badge: 'Healthy Treat' },
+        { icon: '🫘', name: 'Legumes & Lentils', desc: 'Cheap, calorie-rich, protein-rich. Add to every meal as a side.', badge: 'Budget Friendly' },
+      ],
+      vegan: [
         { icon: '🍚', name: 'Rice, Pasta & Bread', desc: 'Easy-to-eat calorie-dense carbs. Make every meal carb-heavy.', badge: 'Calorie Dense' },
         { icon: '🥜', name: 'Nut Butters & Avocado', desc: '9 kcal/g of fat. Add to every meal — easiest way to spike calories.', badge: 'Fat Dense' },
         { icon: '🥛', name: 'Coconut Milk / Soy Milk', desc: 'Calorie-dense plant milks. Use in curries and smoothies.', badge: 'Dairy Alt' },
         { icon: '🍳', name: 'Olive Oil Cooking', desc: 'Cook everything in olive oil to add 120 kcal per tablespoon.', badge: 'Calorie Boost' },
         { icon: '🌱', name: 'Seitan & Tempeh', desc: 'Very protein dense. Fry or bake with sauces for extra calories.', badge: 'High Cal' },
-        { icon: '🥤', name: 'Calorie-Dense Smoothies', desc: 'Blend oats + soy milk + banana + peanut butter + maple syrup = 700–900 kcal.', badge: 'Liquid Calories' },
+        { icon: '🥤', name: 'Calorie-Dense Smoothies', desc: 'Blend oats + soy milk + banana + peanut butter + maple syrup = 700+ kcal.', badge: 'Liquid Calories' },
         { icon: '🍫', name: 'Dark Chocolate 70%+', desc: 'Healthy fats + calories + antioxidants. 30–40g daily is fine.', badge: 'Healthy Treat' },
         { icon: '🫘', name: 'Legumes & Lentils', desc: 'Cheap, calorie-rich, protein-rich. Add to every meal as a side.', badge: 'Budget Friendly' },
       ]
@@ -233,6 +263,16 @@ const GOAL_PLANS = {
         { icon: '💧', name: 'Water & Green Tea', desc: 'Stay hydrated. Green tea boosts metabolism by 3–4%. Aim 3L water/day.', badge: 'Hydration' },
       ],
       veg: [
+        { icon: '🥚', name: 'Egg Whites + Whole Eggs', desc: '4 whites + 1 whole egg = high protein, moderate calories. Perfect ratio.', badge: 'Protein' },
+        { icon: '🥗', name: 'Greek Yogurt (0% Fat)', desc: 'High protein snack. Add berries for a filling, low-calorie dessert.', badge: 'Snack' },
+        { icon: '🌱', name: 'Tofu & Seitan', desc: 'Lean plant proteins. Essential for body recomp.', badge: 'Lean Protein' },
+        { icon: '🥛', name: 'Whey Protein Isolate', desc: 'Essential to keep protein high while keeping calories/carbs in check.', badge: 'Protein' },
+        { icon: '🥦', name: 'High-Volume Vegetables', desc: 'Fill 50% of your plate with veggies — creates fullness at minimal calories.', badge: 'Volume Eating' },
+        { icon: '🍠', name: 'Sweet Potato & Brown Rice', desc: 'Eat carbs primarily around training. Carb-cycle for best results.', badge: 'Carb Timing' },
+        { icon: '🫐', name: 'Berries & Citrus Fruits', desc: 'Low-sugar, high-fibre fruits that support fat burning and recovery.', badge: 'Low Sugar' },
+        { icon: '💧', name: 'Water & Green Tea', desc: 'Stay hydrated. Green tea boosts metabolism by 3–4%. Aim 3L water/day.', badge: 'Hydration' },
+      ],
+      vegan: [
         { icon: '🌱', name: 'Tofu & Seitan', desc: 'Lean plant proteins. Essential for body recomp on a plant-based diet.', badge: 'Lean Protein' },
         { icon: '🥛', name: 'Plant Protein Powder', desc: 'Essential to keep protein high while keeping calories/carbs in check.', badge: 'Protein' },
         { icon: '🥦', name: 'High-Volume Vegetables', desc: 'Fill 50% of your plate with veggies — creates fullness at minimal calories.', badge: 'Volume Eating' },
@@ -269,6 +309,15 @@ const GOAL_PLANS = {
         { icon: '🍋', name: 'Lemon Water', desc: 'Flavour water without calories. Helps digestion and keeps appetite managed.', badge: 'Hydration' },
       ],
       veg: [
+        { icon: '🥚', name: 'Egg Whites (Bulk)', desc: '1 egg white = 17 kcal, 4g protein. Replace whole eggs during a cut.', badge: 'Low Cal' },
+        { icon: '🥛', name: 'Whey Protein Isolate', desc: 'Lowest calorie protein supplement. 25g protein, 110 kcal — use to hit protein targets.', badge: 'Supplement' },
+        { icon: '🌱', name: 'Seitan & Extra Firm Tofu', desc: 'Ultra-lean plant proteins. Avoid fatty vegan substitutes.', badge: 'Must Eat' },
+        { icon: '🌿', name: 'Leafy Greens (Unlimited)', desc: 'Spinach, arugula, kale, romaine — eat as much as you want. Near-zero calories.', badge: 'Unlimited' },
+        { icon: '🍵', name: 'Green Tea & Black Coffee', desc: 'Suppress appetite and boost metabolism without any calories.', badge: 'Appetite Ctrl' },
+        { icon: '🥒', name: 'Cucumbers, Celery, Broccoli', desc: 'Negative-calorie effect foods. Eat to fight hunger during deficit.', badge: 'Anti-Hunger' },
+        { icon: '🍋', name: 'Lemon Water', desc: 'Flavour water without calories. Helps digestion and keeps appetite managed.', badge: 'Hydration' },
+      ],
+      vegan: [
         { icon: '🌱', name: 'Seitan & Extra Firm Tofu', desc: 'Ultra-lean plant proteins. Avoid fatty vegan substitutes.', badge: 'Must Eat' },
         { icon: '🥛', name: 'Pea Protein Isolate', desc: 'Very low carb/fat. Use to hit protein targets without breaking calorie bank.', badge: 'Low Cal' },
         { icon: '🌿', name: 'Leafy Greens (Unlimited)', desc: 'Spinach, arugula, kale, romaine — eat as much as you want. Near-zero calories.', badge: 'Unlimited' },
@@ -306,6 +355,16 @@ const GOAL_PLANS = {
         { icon: '🚫', name: 'Zero Alcohol & Zero Sugary Drinks', desc: 'These are the #1 cause of belly fat. Non-negotiable for visible abs.', badge: 'Rule #1' },
       ],
       veg: [
+        { icon: '🥚', name: 'Egg Whites & Greek Yogurt', desc: 'High protein to preserve abs muscle while cutting fat.', badge: 'Foundation' },
+        { icon: '🌱', name: 'Tofu, Tempeh, Seitan', desc: 'Lean plant proteins. Essential for abs definition.', badge: 'Foundation' },
+        { icon: '🥦', name: 'Non-Starchy Vegetables', desc: 'Fill up on broccoli, cucumber, spinach, peppers. High fibre reduces bloating.', badge: 'Anti-Bloat' },
+        { icon: '💧', name: '3–4L Water Daily', desc: 'Flushes sodium, reduces water retention and bloating which hides abs.', badge: 'Must Do' },
+        { icon: '🧂', name: 'Cut Sodium & Processed Food', desc: 'High sodium causes water retention and belly bloat. Avoid sauces, canned food.', badge: 'Critical' },
+        { icon: '🍌', name: 'Potassium-Rich Foods', desc: 'Banana, avocado, sweet potato — balances sodium and reduces water retention.', badge: 'Anti-Bloat' },
+        { icon: '🫚', name: 'Healthy Fats Only', desc: 'Olive oil, avocado, chia seeds — reduce inflammation and support fat burning.', badge: 'Good Fat' },
+        { icon: '🚫', name: 'Zero Alcohol & Zero Sugary Drinks', desc: 'These are the #1 cause of belly fat. Non-negotiable for visible abs.', badge: 'Rule #1' },
+      ],
+      vegan: [
         { icon: '🌱', name: 'High Protein Every Meal', desc: 'Tofu, tempeh, seitan. Protein preserves abs muscle while cutting fat.', badge: 'Foundation' },
         { icon: '🥦', name: 'Non-Starchy Vegetables', desc: 'Fill up on broccoli, cucumber, spinach, peppers. High fibre reduces bloating.', badge: 'Anti-Bloat' },
         { icon: '💧', name: '3–4L Water Daily', desc: 'Flushes sodium, reduces water retention and bloating which hides abs.', badge: 'Must Do' },
@@ -432,6 +491,7 @@ const dom = {
   goalGrid: $('goal-grid'),
   dietNonveg: $('diet-nonveg'),
   dietVeg: $('diet-veg'),
+  dietVegan: $('diet-vegan'),
   // Actions
   saveHistoryBtn: $('save-history-btn'),
   exportCsvBtn: $('export-csv-btn'),
@@ -614,7 +674,7 @@ function initGoalButtons() {
 }
 
 function initDietButtons() {
-  const btns = [dom.dietNonveg, dom.dietVeg];
+  const btns = [dom.dietNonveg, dom.dietVeg, dom.dietVegan];
   btns.forEach(btn => {
     if (!btn) return;
     btn.addEventListener('click', () => {
@@ -622,11 +682,12 @@ function initDietButtons() {
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
       
-      currentDietPref = btn.id === 'diet-veg' ? 'veg' : 'nonveg';
+      currentDietPref = btn.id.replace('diet-', ''); // nonveg, veg, vegan
       
       if (lastResults) {
         renderPlanCard(currentGoal);
-        showToast(`Diet set to: ${currentDietPref === 'veg' ? 'Veg / Vegan' : 'Non-Veg'}`);
+        const labels = { 'nonveg': 'Non-Veg', 'veg': 'Vegetarian', 'vegan': 'Vegan' };
+        showToast(`Diet set to: ${labels[currentDietPref]}`);
       }
     });
   });
