@@ -1,5 +1,5 @@
 /**
- * DesiFit Premium BMI Calculator — app.js
+ * TheBMI Premium BMI Calculator — app.js
  * ============================================================
  * Features:
  *  - BMI, BMR (Mifflin-St Jeor), TDEE, Body Fat (US Navy),
@@ -24,8 +24,8 @@
    CONSTANTS & CONFIGURATION
    ============================================================ */
 
-const HISTORY_KEY = 'desifit_history';
-const THEME_KEY = 'desifit_theme';
+const HISTORY_KEY = 'thebmi_history';
+const THEME_KEY = 'thebmi_theme';
 
 /** BMI category thresholds */
 const BMI_CATEGORIES = [
@@ -681,9 +681,9 @@ function initDietButtons() {
       btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
-      
+
       currentDietPref = btn.id.replace('diet-', ''); // nonveg, veg, vegan
-      
+
       if (lastResults) {
         renderPlanCard(currentGoal);
         const labels = { 'nonveg': 'Non-Veg', 'veg': 'Vegetarian', 'vegan': 'Vegan' };
@@ -1666,7 +1666,7 @@ function resultsToCsvRow(r) {
    SHARE / MODAL
    ============================================================ */
 function buildShareText(r) {
-  return `My DesiFit results: BMI ${r.bmi} (${r.category.label})` +
+  return `My TheBMI results: BMI ${r.bmi} (${r.category.label})` +
     (r.bodyFatPct ? `, Body Fat ${r.bodyFatPct}%` : '') +
     (r.tdee ? `, TDEE ${r.tdee} kcal` : '') +
     `. Calculate yours → ${location.href}`;
@@ -1845,7 +1845,7 @@ function initEventListeners() {
   /* ---- Export CSV ---- */
   dom.exportCsvBtn.addEventListener('click', () => {
     if (!lastResults) { showToast('Calculate first!'); return; }
-    exportCsv([resultsToCsvRow(lastResults)], 'desifit-bmi.csv');
+    exportCsv([resultsToCsvRow(lastResults)], 'thebmi-bmi.csv');
     showToast('✓ CSV downloaded');
   });
 
@@ -1860,7 +1860,7 @@ function initEventListeners() {
     if (!lastResults) { showToast('Calculate first!'); return; }
     if (navigator.share) {
       navigator.share({
-        title: 'My DesiFit BMI Results',
+        title: 'My TheBMI BMI Results',
         text: buildShareText(lastResults),
         url: location.href,
       }).catch(() => { });
@@ -1891,7 +1891,7 @@ function initEventListeners() {
   dom.exportHistoryCsv.addEventListener('click', () => {
     const history = getHistory();
     if (!history.length) { showToast('No history to export.'); return; }
-    exportCsv(history, 'desifit-history.csv');
+    exportCsv(history, 'thebmi-history.csv');
     showToast('✓ History CSV downloaded');
   });
 
@@ -2002,7 +2002,7 @@ function init() {
     if (navHistory) navHistory.textContent = `History (${histCount})`;
   }
 
-  console.log('%cDesiFit BMI Calculator v1.0', 'color: #00ff88; font-size: 16px; font-weight: bold;');
+  console.log('%cTheBMI BMI Calculator v1.0', 'color: #00ff88; font-size: 16px; font-weight: bold;');
   console.log('%cAll calculations are performed locally. No data is sent to any server.', 'color: #8aaa8a;');
 }
 
