@@ -2040,3 +2040,255 @@ body {
 [data-delay="8"] {
   animation-delay: 0.4s;
 }
+
+/* ============================================================
+   MEAL PLAN — Neon Meal Cards
+   ============================================================ */
+
+.meal-plan-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.15rem 0;
+}
+
+.meal-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(var(--neon-rgb), 0.2);
+  border-radius: var(--radius);
+  padding: 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  animation: fadeInUp 0.45s ease both;
+}
+
+.meal-card:hover {
+  border-color: rgba(var(--neon-rgb), 0.5);
+  box-shadow: 0 4px 20px rgba(var(--neon-rgb), 0.1);
+  transform: translateY(-1px);
+}
+
+/* ── Meal Header ── */
+.meal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(var(--neon-rgb), 0.15);
+}
+
+.meal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meal-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.meal-name {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--neon);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.meal-kcal-badge {
+  background: rgba(var(--neon-rgb), 0.1);
+  color: var(--neon);
+  border: 1px solid rgba(var(--neon-rgb), 0.3);
+  border-radius: 20px;
+  padding: 0.18rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  white-space: nowrap;
+}
+
+/* ── Food List ── */
+.meal-foods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.8rem;
+}
+
+.meal-food-row {
+  display: grid;
+  grid-template-columns: 1fr 52px 58px;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.28rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.81rem;
+  transition: background 0.15s;
+}
+
+.meal-food-row:hover {
+  background: rgba(var(--neon-rgb), 0.05);
+}
+
+.food-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.food-qty {
+  color: var(--neon);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.food-kcal {
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── Macro Bars ── */
+.meal-macros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.meal-macro-item {
+  display: grid;
+  grid-template-columns: 52px 1fr 36px;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.macro-label-sm {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.protein-color { color: #00e5ff; }
+.carb-color    { color: #ffd700; }
+.fat-color     { color: #ff9933; }
+
+.macro-bar-sm {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.macro-fill-sm {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.protein-fill { background: linear-gradient(90deg, #00b4d8, #00e5ff); }
+.carb-fill    { background: linear-gradient(90deg, #f0a500, #ffd700); }
+.fat-fill     { background: linear-gradient(90deg, #e07000, #ff9933); }
+
+.macro-val-sm {
+  font-size: 0.71rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* ── Daily Summary Card ── */
+.daily-summary-card {
+  background: rgba(var(--neon-rgb), 0.04);
+  border: 1px solid rgba(var(--neon-rgb), 0.35);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.daily-summary-title {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--neon);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.nutrition-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.nutrition-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.7rem 0.4rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(var(--neon-rgb), 0.15);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.nutrition-cell:hover {
+  border-color: rgba(var(--neon-rgb), 0.45);
+  transform: translateY(-2px);
+}
+
+.nutrition-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.nutrition-val {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--neon);
+  line-height: 1;
+}
+
+.nutrition-label {
+  font-size: 0.66rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.daily-targets-note {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 0.6rem 0.5rem 0;
+  border-top: 1px solid rgba(var(--neon-rgb), 0.1);
+  line-height: 1.6;
+}
+
+/* ── Meal Plan Action Row ── */
+.meal-plan-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .meal-food-row { grid-template-columns: 1fr 48px; }
+  .food-kcal { display: none; }
+  .nutrition-summary-grid { grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
+  .nutrition-val { font-size: 0.88rem; }
+  .meal-macro-item { grid-template-columns: 46px 1fr 32px; }
+}

@@ -522,6 +522,233 @@ const dom = {
 };
 
 /* ============================================================
+   MEAL PLAN GENERATION
+   ============================================================ */
+
+/**
+ * Generate a complete daily meal plan scaled to the user's calorie target.
+ * @param {object|null} results - lastResults from calculate()
+ * @param {string} goal         - fitness goal key
+ * @param {string} dietPref     - 'nonveg' | 'veg' | 'vegan'
+ * @returns {{ meals, dailyTotals, targets }}
+ */
+function generateMealPlan(results, goal, dietPref) {
+  const weightKg  = (results && results.weightKg)  ? results.weightKg  : 70;
+  const tdee      = (results && results.tdee)       ? results.tdee      :
+                    (results && results.bmr)         ? Math.round(results.bmr * 1.55) : 2200;
+
+  const offset     = (typeof GOAL_CALORIE_OFFSETS !== 'undefined' && GOAL_CALORIE_OFFSETS[goal]) || 0;
+  const targetCals = Math.max(1200, Math.round(tdee + offset));
+  const targetPro  = Math.round(weightKg * 2.0);
+  const targetFat  = Math.round((targetCals * 0.25) / 9);
+  const targetCarb = Math.max(50, Math.round((targetCals - targetPro * 4 - targetFat * 9) / 4));
+  const waterL     = Math.round(weightKg * 0.035 * 10) / 10;
+
+  // Get template (fallback to fat-loss nonveg)
+  const goalTemplates = (typeof MEAL_TEMPLATES !== 'undefined' && MEAL_TEMPLATES[goal])
+    ? MEAL_TEMPLATES[goal] : (MEAL_TEMPLATES ? MEAL_TEMPLATES['fat-loss'] : null);
+  const mealTemplates = goalTemplates
+    ? (goalTemplates[dietPref] || goalTemplates['nonveg'])
+    : null;
+
+  if (!mealTemplates || typeof FOOD_DB === 'undefined') {
+    return { meals: [], dailyTotals: { cal: targetCals, pro: targetPro, carb: targetCarb, fat: targetFat, fib: 0, water: waterL }, targets: { cal: targetCals, pro: targetPro, fat: targetFat, carb: targetCarb } };
+  }
+
+  // Calculate scalable vs fixed base calories
+  let baseScalable = 0;
+  let baseFixed    = 0;
+  mealTemplates.forEach(meal => {
+    meal.items.forEach(item => {
+      const food = FOOD_DB[item.food];
+      if (!food) return;
+      const c = food.cal * item.base / 100;
+      item.fixed ? (baseFixed += c) : (baseScalable += c);
+    });
+  });
+
+  const scalableCalsTarget = Math.max(200, targetCals - baseFixed);
+  const sf = baseScalable > 0 ? scalableCalsTarget / baseScalable : 1;
+
+  // Build scaled meals
+  const meals = mealTemplates.map((mealTpl, mIdx) => {
+    const items = mealTpl.items.map(item => {
+      const food = FOOD_DB[item.food];
+      if (!food) return null;
+      const qty = item.fixed
+        ? item.base
+        : Math.max(5, Math.round(item.base * sf / 5) * 5);
+      return {
+        name: food.name,
+        unit: food.unit,
+        qty,
+        cal:  Math.round(food.cal  * qty / 100),
+        pro:  Math.round(food.pro  * qty / 100 * 10) / 10,
+        carb: Math.round(food.carb * qty / 100 * 10) / 10,
+        fat:  Math.round(food.fat  * qty / 100 * 10) / 10,
+        fib:  Math.round(food.fib  * qty / 100 * 10) / 10,
+      };
+    }).filter(Boolean);
+
+    const totals = items.reduce((t, i) => ({
+      cal:  t.cal  + i.cal,
+      pro:  +(t.pro  + i.pro).toFixed(1),
+      carb: +(t.carb + i.carb).toFixed(1),
+      fat:  +(t.fat  + i.fat).toFixed(1),
+      fib:  +(t.fib  + i.fib).toFixed(1),
+    }), { cal: 0, pro: 0, carb: 0, fat: 0, fib: 0 });
+
+    return { icon: mealTpl.icon, name: mealTpl.name, items, totals };
+  });
+
+  // Daily totals
+  const dt = meals.reduce((t, m) => ({
+    cal:  t.cal  + m.totals.cal,
+    pro:  +(t.pro  + m.totals.pro).toFixed(1),
+    carb: +(t.carb + m.totals.carb).toFixed(1),
+    fat:  +(t.fat  + m.totals.fat).toFixed(1),
+    fib:  +(t.fib  + m.totals.fib).toFixed(1),
+  }), { cal: 0, pro: 0, carb: 0, fat: 0, fib: 0 });
+  dt.water = waterL;
+
+  return { meals, dailyTotals: dt, targets: { cal: targetCals, pro: targetPro, fat: targetFat, carb: targetCarb } };
+}
+
+/**
+ * Render the generated meal plan into a container element.
+ */
+function renderMealPlan(mealPlan, container) {
+  if (!container || !mealPlan) return;
+  const { meals, dailyTotals: dt, targets } = mealPlan;
+
+  container.innerHTML = `
+    <div class="meal-plan-container">
+      ${meals.map((meal, idx) => `
+        <div class="meal-card" style="animation-delay:${idx * 0.07}s">
+          <div class="meal-card-header">
+            <div class="meal-header-left">
+              <span class="meal-icon">${meal.icon}</span>
+              <span class="meal-name">${meal.name}</span>
+            </div>
+            <span class="meal-kcal-badge">${meal.totals.cal} kcal</span>
+          </div>
+
+          <div class="meal-foods">
+            ${meal.items.map(item => `
+              <div class="meal-food-row">
+                <span class="food-name">${item.name}</span>
+                <span class="food-qty">${item.qty}${item.unit}</span>
+                <span class="food-kcal">${item.cal} kcal</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="meal-macros">
+            <div class="meal-macro-item">
+              <span class="macro-label-sm protein-color">Protein</span>
+              <div class="macro-bar-sm">
+                <div class="macro-fill-sm protein-fill" style="width:${Math.min(100, Math.round(meal.totals.pro / Math.max(1, targets.pro / 6) * 100))}%"></div>
+              </div>
+              <span class="macro-val-sm">${meal.totals.pro}g</span>
+            </div>
+            <div class="meal-macro-item">
+              <span class="macro-label-sm carb-color">Carbs</span>
+              <div class="macro-bar-sm">
+                <div class="macro-fill-sm carb-fill" style="width:${Math.min(100, Math.round(meal.totals.carb / Math.max(1, targets.carb / 6) * 100))}%"></div>
+              </div>
+              <span class="macro-val-sm">${meal.totals.carb}g</span>
+            </div>
+            <div class="meal-macro-item">
+              <span class="macro-label-sm fat-color">Fat</span>
+              <div class="macro-bar-sm">
+                <div class="macro-fill-sm fat-fill" style="width:${Math.min(100, Math.round(meal.totals.fat / Math.max(1, targets.fat / 6) * 100))}%"></div>
+              </div>
+              <span class="macro-val-sm">${meal.totals.fat}g</span>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+
+      <!-- Daily Nutrition Summary -->
+      <div class="daily-summary-card">
+        <div class="daily-summary-title">📊 Daily Nutrition Totals</div>
+        <div class="nutrition-summary-grid">
+          <div class="nutrition-cell" style="animation-delay:0.05s">
+            <span class="nutrition-icon">🔥</span>
+            <span class="nutrition-val">${dt.cal}</span>
+            <span class="nutrition-label">Calories</span>
+          </div>
+          <div class="nutrition-cell" style="animation-delay:0.1s">
+            <span class="nutrition-icon">💪</span>
+            <span class="nutrition-val">${dt.pro}g</span>
+            <span class="nutrition-label">Protein</span>
+          </div>
+          <div class="nutrition-cell" style="animation-delay:0.15s">
+            <span class="nutrition-icon">🍚</span>
+            <span class="nutrition-val">${dt.carb}g</span>
+            <span class="nutrition-label">Carbs</span>
+          </div>
+          <div class="nutrition-cell" style="animation-delay:0.2s">
+            <span class="nutrition-icon">🥑</span>
+            <span class="nutrition-val">${dt.fat}g</span>
+            <span class="nutrition-label">Fat</span>
+          </div>
+          <div class="nutrition-cell" style="animation-delay:0.25s">
+            <span class="nutrition-icon">🌾</span>
+            <span class="nutrition-val">${dt.fib}g</span>
+            <span class="nutrition-label">Fiber</span>
+          </div>
+          <div class="nutrition-cell" style="animation-delay:0.3s">
+            <span class="nutrition-icon">💧</span>
+            <span class="nutrition-val">${dt.water}L</span>
+            <span class="nutrition-label">Water</span>
+          </div>
+        </div>
+        <div class="daily-targets-note">
+          🎯 Target: <strong>${targets.cal} kcal</strong> &nbsp;·&nbsp;
+          Protein <strong>${targets.pro}g</strong> &nbsp;·&nbsp;
+          Carbs <strong>${targets.carb}g</strong> &nbsp;·&nbsp;
+          Fat <strong>${targets.fat}g</strong>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="meal-plan-actions">
+        <button class="action-btn" id="mp-copy-btn" aria-label="Copy meal plan to clipboard">📋 Copy Plan</button>
+        <button class="action-btn" id="mp-print-btn" aria-label="Print meal plan">🖨 Print</button>
+      </div>
+    </div>
+  `;
+
+  // Wire buttons (they're dynamically created so we bind here)
+  const copyBtn  = document.getElementById('mp-copy-btn');
+  const printBtn = document.getElementById('mp-print-btn');
+  if (copyBtn)  copyBtn.onclick  = () => copyMealPlan(mealPlan);
+  if (printBtn) printBtn.onclick = () => window.print();
+}
+
+/**
+ * Copy the meal plan to clipboard as plain text.
+ */
+function copyMealPlan(mealPlan) {
+  if (!mealPlan || !mealPlan.meals.length) { showToast('No meal plan to copy.'); return; }
+  const lines = ['TheBMI — Daily Meal Plan', '='.repeat(44)];
+  mealPlan.meals.forEach(m => {
+    lines.push('');
+    lines.push(`${m.icon} ${m.name.toUpperCase()}  (${m.totals.cal} kcal | P: ${m.totals.pro}g | C: ${m.totals.carb}g | F: ${m.totals.fat}g)`);
+    m.items.forEach(i => lines.push(`  • ${i.name}: ${i.qty}${i.unit} — ${i.cal} kcal`));
+  });
+  const t = mealPlan.dailyTotals;
+  lines.push('');
+  lines.push('='.repeat(44));
+  lines.push(`Daily: ${t.cal} kcal | Protein ${t.pro}g | Carbs ${t.carb}g | Fat ${t.fat}g | Fiber ${t.fib}g | Water ${t.water}L`);
+  lines.push('Generated by TheBMI — thebmi.app');
+  navigator.clipboard.writeText(lines.join('\n'))
+    .then(() => showToast('✓ Meal plan copied to clipboard!'))
+    .catch(() => showToast('Copy failed — try manually.'));
+}
+
+/* ============================================================
    PLAN CARD — DIET & EXERCISE RENDERING
    ============================================================ */
 function renderPlanCard(goal) {
@@ -531,40 +758,12 @@ function renderPlanCard(goal) {
   // Update card title
   if (dom.planCardTitle) dom.planCardTitle.textContent = plan.title + ' — Diet & Exercise Plan';
 
-  /* ---- Diet Panel ---- */
+  /* ---- Meal Plan Panel ---- */
   if (dom.planPanelDiet) {
-    dom.planPanelDiet.innerHTML = `
-      <p class="plan-goal-title">${plan.title}</p>
-      <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1rem;line-height:1.55">${plan.summary}</p>
-      <div class="plan-section-label">✅ Foods to Eat</div>
-      <div class="plan-items">
-        ${plan.diet[currentDietPref].map((item, i) => `
-          <div class="plan-item" style="animation-delay:${i * 0.05}s">
-            <span class="plan-item-icon">${item.icon}</span>
-            <div class="plan-item-body">
-              <div class="plan-item-name">${item.name}</div>
-              <div class="plan-item-desc">${item.desc}</div>
-            </div>
-            <span class="plan-item-badge">${item.badge}</span>
-          </div>
-        `).join('')}
-      </div>
-      ${plan.avoid ? `
-        <div class="plan-section-label">❌ Foods to Avoid</div>
-        <div class="plan-items">
-          ${plan.avoid.map((item, i) => `
-            <div class="plan-item" style="animation-delay:${(plan.diet[currentDietPref].length + i) * 0.05}s;border-color:rgba(255,68,68,0.2)">
-              <span class="plan-item-icon">${item.icon}</span>
-              <div class="plan-item-body">
-                <div class="plan-item-name" style="color:#ff8888">${item.name}</div>
-                <div class="plan-item-desc">${item.desc}</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      ` : ''}
-    `;
+    const mealPlan = generateMealPlan(lastResults, goal, currentDietPref);
+    renderMealPlan(mealPlan, dom.planPanelDiet);
   }
+
 
   /* ---- Exercise Panel ---- */
   if (dom.planPanelExercise) {
