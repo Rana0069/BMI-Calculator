@@ -1840,6 +1840,49 @@ body {
   margin-bottom: 0.2rem;
 }
 
+/* ── Diet Preference — 3-button grid (mirrors goal-btn style) ── */
+.diet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+
+.diet-btn {
+  padding: 0.55rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  line-height: 1.3;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.diet-btn:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: var(--neon-glow-soft);
+}
+
+.diet-btn.active {
+  background: var(--neon-glow-soft);
+  border-color: var(--neon);
+  color: var(--neon);
+  box-shadow: 0 0 10px var(--neon-glow);
+}
+
+.diet-btn .goal-icon {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+
 /* ============================================================
    DIET + EXERCISE PLAN CARD
    ============================================================ */

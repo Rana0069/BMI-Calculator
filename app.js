@@ -881,7 +881,7 @@ function initDietButtons() {
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
 
-      currentDietPref = btn.id.replace('diet-', ''); // nonveg, veg, vegan
+      currentDietPref = btn.dataset.diet || btn.id.replace('diet-', ''); // nonveg, veg, vegan
 
       if (lastResults) {
         renderPlanCard(currentGoal);

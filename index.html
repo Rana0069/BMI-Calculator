@@ -328,11 +328,17 @@
               </button>
             </div>
 
-            <h2 class="section-heading" style="margin-top: 1rem;">Diet Preference</h2>
-            <div class="toggle-track" style="margin-top: 0.5rem;" role="group" aria-label="Diet preference">
-              <button class="toggle-option active" id="diet-nonveg" aria-pressed="true">Non-Veg</button>
-              <button class="toggle-option" id="diet-veg" aria-pressed="false">Veg</button>
-              <button class="toggle-option" id="diet-vegan" aria-pressed="false">Vegan</button>
+            <h2 class="section-heading" style="margin-top: 1.25rem;">Diet Preference</h2>
+            <div class="diet-grid" id="diet-grid" role="group" aria-label="Select diet preference" style="margin-top: 0.5rem;">
+              <button class="diet-btn active" id="diet-nonveg" data-diet="nonveg" aria-pressed="true">
+                <span class="goal-icon">🥩</span>Non-Veg
+              </button>
+              <button class="diet-btn" id="diet-veg" data-diet="veg" aria-pressed="false">
+                <span class="goal-icon">🥦</span>Vegetarian
+              </button>
+              <button class="diet-btn" id="diet-vegan" data-diet="vegan" aria-pressed="false">
+                <span class="goal-icon">🌱</span>Vegan
+              </button>
             </div>
           </div>
 
