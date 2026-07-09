@@ -1119,8 +1119,6 @@ body {
 /* ============================================================
    PROGRESS RINGS
    ============================================================ */
-.progress-ring-card {}
-
 .rings-row {
   display: flex;
   justify-content: space-around;
