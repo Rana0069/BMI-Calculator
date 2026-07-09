@@ -2325,6 +2325,44 @@ body {
   flex-wrap: wrap;
 }
 
+/* ============================================================
+   BACK TO TOP BUTTON
+   ============================================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px var(--neon-glow-soft);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--neon);
+  color: var(--bg-dark);
+  box-shadow: 0 0 15px var(--neon-glow);
+  transform: translateY(-3px);
+}
+
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .meal-food-row { grid-template-columns: 1fr 48px; }

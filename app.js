@@ -2158,6 +2158,29 @@ function initRealTimeCalc() {
 }
 
 /* ============================================================
+   BACK TO TOP BUTTON
+   ============================================================ */
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+/* ============================================================
    INIT
    ============================================================ */
 function init() {
@@ -2176,6 +2199,9 @@ function init() {
 
   // Init real-time calculation
   initRealTimeCalc();
+
+  // Init back to top button
+  initBackToTop();
 
   // Render FAQ
   renderFAQ();
